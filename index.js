@@ -5,7 +5,9 @@ const sqlite3 = require("sqlite3");
 
 const app = new express();
 const db = new sqlite3.Database("./rateYourProfessor.db", err => {
-  if (err) throw err;
+  if (err) {
+    console.log(err);
+  } 
   console.log("Connected to SQL Database");
 });
 
@@ -42,15 +44,6 @@ app.post("/reviewData", (req, res) => {
     status: "success",
     timestamp: timestamp
   });
-
-  db.run(
-    "CREATE TABLE IF NOT EXISTS reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, university_name TEXT, campus TEXT, faculty_name TEXT, review TEXT, time TIMESTAMP DEFAULT DATETIME('now'))",
-    err => {
-      if (err) {
-        console.log(err);
-      }
-    }
-  );
 
   db.run(
     "INSERT INTO reviews (university_name, campus, faculty_name, review) values (?, ?, ?, ?)",
