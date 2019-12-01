@@ -35,13 +35,24 @@ document.querySelector("#submit").addEventListener("click", async () => {
 document
   .querySelector("#display-reviews")
   .addEventListener("click", async () => {
+    let oldData;
+    let boOl = false;
+
+    document.querySelector("#loading").style.display = "block";
     const data = await fetch("/receivingReviews");
     const reviewData = await data.json();
+    boOl = true;
 
     let div;
     let rev = [];
     let reviewFinal = {};
-    let revHeadings = ["Serial Number", "University Name", "Campus Name", "Faculty Name", "Review"];
+    let revHeadings = [
+      "Serial Number",
+      "University Name",
+      "Campus Name",
+      "Faculty Name",
+      "Review"
+    ];
     for (let i in reviewData) {
       for (let j in reviewData[i]) {
         div = document.createElement("div");
@@ -53,7 +64,9 @@ document
       }
       // console.log(reviewFinal);
       div.textContent = JSON.stringify(reviewFinal);
+      document.querySelector("#loading").style.display = "none";
       document.querySelector("#actually-display-reviews").appendChild(div);
       rev = [];
+      oldData = reviewFinal;
     }
   });

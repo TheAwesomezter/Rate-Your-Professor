@@ -63,8 +63,8 @@ textarea {
 }
 
 .reviews {
-    background-color: #b4da55;
-    color: lightseagreen;
+    background-color: rgb(134, 72, 134);
+    color: #b4da55;
     margin: 15px;
     position: relative;
     left: 70px;
@@ -77,3 +77,9 @@ textarea {
     vertical-align: middle;
     display: table-cell;
 } */
+
+#loading {
+    color: #b4da55;
+    font-size: 40px;
+    display: none;
+}
