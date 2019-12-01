@@ -78,6 +78,6 @@ app.get("/receivingReviews", (req, res) => {
   // });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log(`Listening at port ${process.env.PORT}`);
 });
