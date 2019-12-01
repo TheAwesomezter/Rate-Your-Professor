@@ -35,17 +35,15 @@ document.querySelector("#submit").addEventListener("click", async () => {
 document
   .querySelector("#display-reviews")
   .addEventListener("click", async () => {
-    let oldData;
-    let boOl = false;
+    document.querySelector("#actually-display-reviews").textContent = "";
+    let div;
+    let rev = [];
+    let reviewFinal = {};
 
     document.querySelector("#loading").style.display = "block";
     const data = await fetch("/receivingReviews");
     const reviewData = await data.json();
-    boOl = true;
 
-    let div;
-    let rev = [];
-    let reviewFinal = {};
     let revHeadings = [
       "Serial Number",
       "University Name",
