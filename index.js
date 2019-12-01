@@ -11,7 +11,7 @@ let con = mysql.createConnection({
   database: "rateYourProfessor"
 });
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 let reqNo = 1;
 
 app.use(bodyParser.json());
