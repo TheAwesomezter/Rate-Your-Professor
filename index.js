@@ -1,8 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const sqlite3 = require("sqlite3");
 
 const app = new express();
+const db = new sqlite3.Database("./rateYourProfessor.db", err => {
+  if (err) throw err;
+  console.log("Connected to SQL Database");
+});
 
 // let con = mysql.createConnection({
 //   host: "localhost",
@@ -23,10 +28,11 @@ app.use(express.json({ limit: "1mb" }));
 
 app.get("/", (req, res) => {
   res.redirect("./public/html/index.html");
-})
+});
 
 app.post("/reviewData", (req, res) => {
-  console.log("Got a ping! Number: " + reqNo);
+  // console.log("Got a ping! Number: " + reqNo);
+  // reqNo++;
   const data = req.body;
   let timestamp = Date.now();
   data.timestamp = timestamp;
@@ -37,49 +43,68 @@ app.post("/reviewData", (req, res) => {
     timestamp: timestamp
   });
 
-  con.connect(err => {
-    if (err) throw err;
-    console.log("Connected to Database");
-  });
-  let sql =
-    "insert into reviews (university_name, campus, faculty_name, review) values (" +
-    " ' " +
-    data.u_name +
-    " ' " +
-    ", " +
-    " ' " +
-    data.c_name +
-    " ' " +
-    ", " +
-    " ' " +
-    data.f_name +
-    " ' " +
-    ", " +
-    " ' " +
-    data.review +
-    " ' " +
-    ")";
-  con.query(sql, (err, res) => {
-    if (err) throw err;
-    console.log("Inserted into database");
-  });
-});
+  db.run(
+    "CREATE TABLE IF NOT EXISTS reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, university_name TEXT, campus TEXT, faculty_name TEXT, review TEXT, time TIMESTAMP DEFAULT DATETIME('now'))",
+    err => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
 
-app.get("/receivingReviews", (req, res) => {
+  db.run(
+    "INSERT INTO reviews (university_name, campus, faculty_name, review) values (?, ?, ?, ?)",
+    [data.u_name, data.c_name, data.f_name, data.review],
+    err => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("A row has been inserted with row_id " + this.lastID);
+    }
+  );
+
   // con.connect(err => {
   //   if (err) throw err;
   //   console.log("Connected to Database");
+  // });
+  // let sql =
+  // "insert into reviews (university_name, campus, faculty_name, review) values (" +
+  // " ' " +
+  // data.u_name +
+  // " ' " +
+  // ", " +
+  // " ' " +
+  // data.c_name +
+  // " ' " +
+  // ", " +
+  // " ' " +
+  // data.f_name +
+  // " ' " +
+  // ", " +
+  // " ' " +
+  // data.review +
+  // " ' " +
+  // ")";
+  // con.query(sql, (err, res) => {
+  //   if (err) throw err;
+  //   console.log("Inserted into database");
+  // });
+  // db.close();
+  console.log("inserted?");
+});
 
-  console.log("Got a ping! Number: " + reqNo);
+app.get("/receivingReviews", (req, res) => {
+  // console.log("Got a ping! Number: " + reqNo);
+  // reqNo++;
 
   let sql = "select * from reviews";
-  con.query(sql, (err, result, fields) => {
-    if (err) throw err;
-
-    console.log(result);
-    res.json(result);
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.log(err.message);
+    }
+    res.json(rows);
   });
-  // });
+  // db.close();
 });
 
 app.listen(port, () => {
