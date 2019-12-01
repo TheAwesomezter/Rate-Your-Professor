@@ -1,0 +1,79 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #420690;
+    /* align-items: center; */
+}
+
+form {
+    padding: 50px;
+    margin: 35px;
+    display: inline-block;
+}
+
+h1, form {
+    color: #b4da55;
+}
+
+input, label, textarea {
+    margin-bottom: 35px;
+}
+
+label {
+    font-size: 20px;
+    text-align: right;
+    margin-top: 5px;
+    float: left;
+}
+
+input {
+    position: relative;
+    left: 50px;
+    width: 300px;
+    height: 30px;
+    float: right;
+    text-align: left;
+}
+
+textarea {
+    position: relative;
+    left: 50px;
+    height: 80px;
+    width: 300px;
+    float: right;
+    text-align: left;
+}
+
+.but {
+    width: 150px;
+    height: 50px;
+    margin: auto 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+.cen {
+    width: 771.55px;
+    text-align: center;
+}
+
+.reviews {
+    background-color: #b4da55;
+    color: lightseagreen;
+    margin: 15px;
+    position: relative;
+    left: 70px;
+    height: 50px;
+    width: 80%;
+    overflow: scroll;
+}
+
+/* div {
+    vertical-align: middle;
+    display: table-cell;
+} */
