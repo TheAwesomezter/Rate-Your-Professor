@@ -21,6 +21,10 @@ app.use(express.static("./public/"));
 app.use(express.static("./public/html/"));
 app.use(express.json({ limit: "1mb" }));
 
+app.get("/", (req, res) => {
+  res.redirect("/public/html/index.html");
+})
+
 app.post("/reviewData", (req, res) => {
   console.log("Got a ping! Number: " + reqNo);
   const data = req.body;
