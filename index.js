@@ -4,12 +4,12 @@ const mysql = require("mysql");
 
 const app = new express();
 
-let con = mysql.createConnection({
-  host: "localhost",
-  user: "administrator",
-  password: "veryGood",
-  database: "rateYourProfessor"
-});
+// let con = mysql.createConnection({
+//   host: "localhost",
+//   user: "administrator",
+//   password: "veryGood",
+//   database: "rateYourProfessor"
+// });
 
 const port = process.env.PORT || 8080;
 let reqNo = 1;
@@ -78,6 +78,6 @@ app.get("/receivingReviews", (req, res) => {
   // });
 });
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log(`Listening at port ${process.env.PORT}`);
+app.listen(port, () => {
+  console.log(`Listening at port ${port}`);
 });
